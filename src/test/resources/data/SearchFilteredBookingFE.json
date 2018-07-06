@@ -1,0 +1,24 @@
+[{
+	"passengers": "1",
+	"start": {
+		"address": {
+			"formattedAddress": "6 Place du Colonel Fabien, 75019 Paris, France",
+			"coordinates": {
+				"latitude": 48.8783846,
+				"longitude": 2.370948799999951
+			}
+		},
+		"date": "2018-06-26T13:00:12.000"
+	},
+	"end": {
+		"address": {
+			"formattedAddress": "6 Place du Colonel Fabien, 75019 Paris, France",
+			"coordinates": {
+				"latitude": 48.8783846,
+				"longitude": 2.370948799999951
+			}
+		},
+		"date": "2018-06-26T14:00:12.000"
+	}
+}
+]
