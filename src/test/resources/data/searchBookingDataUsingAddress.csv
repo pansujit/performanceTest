@@ -1,10 +1,11 @@
 passengers;formattedAddress;latitude;longitude;startTime;endTime
 1;6 Place du Colonel Fabien, 75019 Paris, France;48.8783846;2.370948799999951;20;120
 2;6 Place du Colonel Fabien, 75019 Paris, France;48.8783846;2.370948799999951;20;120
-2;Paris,France;856614;2.3522219000000177;30;150
+2;Paris,France;48.856614;2.3522219000000177;30;150
 2;1 Rue de Gramont, 75002 Paris, France;48.8691016;2.3366570000000593;30;90
 3;1 Rue de Rivoli, 75004 Paris, France;48.8555799;2.3591636999999537;40;110
 3;1 Rue de Rivoli, 75004 Paris, France;48.8555799;2.3591636999999537;500;600
 1;61 Rue Emile Zola, 92600 Asnières-sur-Seine France;48.92505;2.282533199999989;15;75
 1;61 Rue Emile Zola, 93120 La Courneuve, France;48.9234754;2.3889580000000024;200;300
-1;62 Rue de la Meignanne, 49100 Angers, France;47.4816216;-0.57315600000004;25;100
+2;2 Rue Paul Fort, 91310 Montlhéry, France;48.6407651;2.2680894999999737;25;100
+1;Creil, France;49.2576872;2.4783912999999984;30;90
