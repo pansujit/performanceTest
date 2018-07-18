@@ -23,12 +23,12 @@ import java.time.temporal.ChronoUnit
 import com.typesafe.config._
 import io.gatling.core.structure.PopulationBuilder
 
-class MultipleScenarioTest extends Simulation {
+class MultipleScenarioTestWeb extends Simulation {
 
       var CreateId = ""
       val conf= ConfigFactory.load(System.getProperty("environment"))
       	val authToken= Map("X-AUTH-TOKEN" -> "${CreateId}") 
-			val loginData=csv(conf.getString("members")).circular
+			val loginData=csv(conf.getString("members")).random
 			val searchAddressData=ssv(conf.getString("bookingSearchFilteredByAddress")).random
 	    //val conf1= java.util.ResourceBundle.getBundle("src/test/resources/valid2.properties")
 	    val baseurl=conf.getString("baseURL");
@@ -96,12 +96,12 @@ class MultipleScenarioTest extends Simulation {
 	 * This method authenticate user using the username and password that are coming from csv files
 	 */
 	object authetication{
-				val login=
-				    exec(session => session.set("admin",conf.getString("superAdminUsername")))
-	          .exec(session => session.set("password",conf.getString("password")))
+				val login=feed(loginData)
+				    //exec(session => session.set("admin",conf.getString("superAdminUsername")))
+	          //.exec(session => session.set("password",conf.getString("password")))
 				  .exec(http("login_request")
 						.post("/users/authenticate")
-						.body(StringBody("""{"login":"${admin}","password":"${password}" }""")).asJSON
+						.body(StringBody("""{"login":"${username}","password":"${password}" }""")).asJSON
 						.check(header("x-auth-token").saveAs("auth_token"))  
 						.check(jsonPath("$.id").saveAs("id")))
 				.pause(2)
@@ -125,9 +125,9 @@ class MultipleScenarioTest extends Simulation {
 			.userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:16.0) Gecko/20100101 Firefox/16.0")
       .disableCaching
       
-			val loginBackuser= scenario("login").exec(authetication.login)
-			val searchVehicleForBooking = scenario("search filetered by user").exec(searchFilterted.searchFilteredRequest)
-			
+		//	val loginBackuser= scenario("login").exec(authetication.login)
+		//	val searchVehicleForBooking = scenario("search filetered by user").exec(searchFilterted.searchFilteredRequest)
+			val searchVehicle=scenario("vehicleSearch").exec(authetication.login,searchFilterted.searchFilteredRequest)
 			//setUp(scn.inject(constantUsersPerSec(10) during (1 minutes)).protocols(httpConf))
 			
 			
@@ -165,14 +165,8 @@ class MultipleScenarioTest extends Simulation {
     ,constantUsersPerSec(10) during (30 seconds),nothingFor(5 seconds),
    heavisideUsers(30) over (10 seconds),nothingFor(2 seconds)
     )).protocols(httpConf)
-	*/
+	
 	setUp(loginBackuser.inject(nothingFor(2 seconds),atOnceUsers(1)),
-    searchVehicleForBooking.inject(nothingFor(10 seconds),atOnceUsers(1)
-    )).protocols(httpConf)
-			
-			
-			
-	/*setUp(loginBackuser.inject(nothingFor(2 seconds),atOnceUsers(1)),
     searchVehicleForBooking.inject(nothingFor(10 seconds),splitUsers(100) into atOnceUsers(1) separatedBy(10 seconds)
     )).protocols(httpConf)*/
 	/*setUp(loginBackuser.inject(nothingFor(2 seconds),atOnceUsers(1)),
@@ -182,7 +176,17 @@ class MultipleScenarioTest extends Simulation {
     searchVehicleForBooking.inject(nothingFor(10 seconds),rampUsersPerSec(0.08) to(1) during(5 minutes)
     )).protocols(httpConf)	*/	
 
-	/*setUp(loginBackuser.inject(nothingFor(2 seconds),atOnceUsers(1)),
-    searchVehicleForBooking.inject(nothingFor(10 seconds),constantUsersPerSec(5) during (5 seconds)
-    )).protocols(httpConf)	*/
+	/*setUp(
+	    searchVehicle.inject(
+	        nothingFor(2 seconds),
+	        atOnceUsers(1)
+    )
+    ).protocols(httpConf)	*/
+    
+    	setUp(
+    searchVehicle.inject(
+        nothingFor(2 seconds),
+        rampUsersPerSec(0.05) to(0.9) during(5 minutes)
+    )
+    ).protocols(httpConf)
 }

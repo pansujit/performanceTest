@@ -101,7 +101,7 @@ class MultipleScenarioTestMobile extends Simulation {
 	          //.exec(session => session.set("password",conf.getString("password")))
 				  .exec(http("login_request")
 						.post("/users/authenticate")
-						.body(StringBody("""{"login":"${username}","password":"${password}" }""")).asJSON
+						.body(StringBody("""{"login":"${username}","password":"${password}"}""")).asJSON
 						.check(header("x-auth-token").saveAs("auth_token"))  
 						.check(jsonPath("$.id").saveAs("id")))
 				.pause(2)
