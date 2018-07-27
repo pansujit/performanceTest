@@ -7,36 +7,61 @@
 	<version>1.0-SNAPSHOT</version>
 
 	<properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <gatling.version>2.3.1</gatling.version>
-    <gatling-plugin.version>2.2.4</gatling-plugin.version>
-    <scala-maven-plugin.version>3.3.2</scala-maven-plugin.version>
-  </properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<gatling.version>2.3.1</gatling.version>
+		<gatling-plugin.version>2.2.4</gatling-plugin.version>
+		<scala-maven-plugin.version>3.3.2</scala-maven-plugin.version>
+	</properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>io.gatling.highcharts</groupId>
-      <artifactId>gatling-charts-highcharts</artifactId>
-      <version>${gatling.version}</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>io.gatling.highcharts</groupId>
+			<artifactId>gatling-charts-highcharts</artifactId>
+			<version>${gatling.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20151123</version>
+		</dependency>
+	</dependencies>
 
-  <build>
-  <testSourceDirectory>src/test/scala</testSourceDirectory>
-    <plugins>
-      <plugin>
-        <groupId>net.alchim31.maven</groupId>
-        <artifactId>scala-maven-plugin</artifactId>
-        <version>${scala-maven-plugin.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>io.gatling</groupId>
-        <artifactId>gatling-maven-plugin</artifactId>
-        <version>${gatling-plugin.version}</version>
-      </plugin>
-    </plugins>
-  </build>
+	<build>
+		<testSourceDirectory>src/test/scala</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>${scala-maven-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>io.gatling</groupId>
+				<artifactId>gatling-maven-plugin</artifactId>
+				<version>${gatling-plugin.version}</version>
+				<configuration>
+					<simulationsFolder>${project.basedir}/src/test/scala</simulationsFolder>
+					<!-- <simulationClass>computerdatabase.GetCompanies</simulationClass> -->
+					<runMultipleSimulations>true</runMultipleSimulations>
+					<includes>
+						<param>computerdatabase.GetCompanies</param>
+						<param>computerdatabase.GetAllMembersOfSuperCompanyTest</param>
+					</includes>
+					<excludes>
+						<param>computerdatabase.BasicSimulation</param>
+						<param>computerdatabase.MultipleScenarioTestMobile</param>
+						<param>computerdatabase.MultipleScenarioTestWeb</param>
+						<param>computerdatabase.MultipleScenarioTest</param>
+						<param>computerdatabase.TestGateWay</param>
+					</excludes>
+				</configuration>
+
+
+
+
+			</plugin>
+		</plugins>
+	</build>
 </project>
