@@ -43,24 +43,27 @@
 				<version>${gatling-plugin.version}</version>
 				<configuration>
 					<simulationsFolder>${project.basedir}/src/test/scala</simulationsFolder>
-					<!-- <simulationClass>computerdatabase.GetCompanies</simulationClass> -->
-					<runMultipleSimulations>true</runMultipleSimulations>
+					<!--<runMultipleSimulations>true</runMultipleSimulations>
 					<includes>
 						<param>computerdatabase.GetCompanies</param>
 						<param>computerdatabase.GetAllMembersOfSuperCompanyTest</param>
 					</includes>
-					<excludes>
-						<param>computerdatabase.BasicSimulation</param>
-						<param>computerdatabase.MultipleScenarioTestMobile</param>
-						<param>computerdatabase.MultipleScenarioTestWeb</param>
-						<param>computerdatabase.MultipleScenarioTest</param>
-						<param>computerdatabase.TestGateWay</param>
-					</excludes>
+					 <excludes> <param>computerdatabase.BasicSimulation</param> <param>computerdatabase.MultipleScenarioTestMobile</param> 
+						<param>computerdatabase.MultipleScenarioTestWeb</param> <param>computerdatabase.MultipleScenarioTest</param> 
+						<param>computerdatabase.TestGateWay</param> </excludes> -->
+					<propagateSystemProperties>true</propagateSystemProperties>
 				</configuration>
-
-
-
-
+				<executions>
+					<execution>
+						<id>GoOrBust</id>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration> 
+						<simulationClass> computerdatabase.GetCompanies</simulationClass>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

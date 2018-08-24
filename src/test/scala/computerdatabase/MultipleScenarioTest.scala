@@ -172,9 +172,19 @@ class MultipleScenarioTest extends Simulation {
 			
 			
 			
-	setUp(loginBackuser.inject(nothingFor(2 seconds),atOnceUsers(1)),
+	/*setUp(loginBackuser.inject(nothingFor(2 seconds),atOnceUsers(1)),
     searchVehicleForBooking.inject(nothingFor(10 seconds),splitUsers(100) into atOnceUsers(1) separatedBy(10 seconds)
-    )).protocols(httpConf)
+    )).protocols(httpConf)*/
+    
+			setUp(loginBackuser.inject(nothingFor(2 seconds),atOnceUsers(1)),
+    searchVehicleForBooking.inject(//nothingFor(10 seconds),rampUsers(50) over (50 seconds),
+       nothingFor(10 seconds), splitUsers(1800) into atOnceUsers(1) separatedBy(2 seconds),
+       //nothingFor(10 seconds), constantUsersPerSec(10) during (120 seconds),
+      // nothingFor(10 seconds), constantUsersPerSec(20) during (240 seconds)
+        
+   ) ).protocols(httpConf)
+			
+    
 	/*setUp(loginBackuser.inject(nothingFor(2 seconds),atOnceUsers(1)),
     searchVehicleForBooking.inject(nothingFor(10 seconds),rampUsersPerSec(0.09) to(1) during(10 minutes)
     )).protocols(httpConf)
